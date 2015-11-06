@@ -9,7 +9,7 @@ This package includes:
     * a TCP/TLS handler to send log entries over TCP with TLS support
     * a formatter to convert logging record into GELF(1.1).
 
-* for [LTSV](http://ltsv.org/)
+* for [LTSV](http://ltsv.org/):
     
     * a TCP/TLS handler to send log entries over TCP with TLS support
     * a formatter to convert logging record into LTSV.
