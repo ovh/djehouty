@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/cdumay/djehouty.svg?branch=master)](https://travis-ci.org/cdumay/djehouty)
+
 # Djehouty
 
 Djehouty is intended to be a set of logging formatters and handlers to easly send log entries.
