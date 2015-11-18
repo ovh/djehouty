@@ -6,7 +6,7 @@ Djehouty is intended to be a set of logging formatters and handlers to easly sen
 
 This package includes:
 
-* for [GELF](https://www.graylog.org/resources/gelf-2/):
+* for [GELF](https://www.graylog.org/resources/gelf/):
     
     * a TCP/TLS handler to send log entries over TCP with TLS support
     * a formatter to convert logging record into GELF(1.1).
