@@ -16,16 +16,49 @@ This package includes:
     * a TCP/TLS handler to send log entries over TCP with TLS support
     * a formatter to convert logging record into LTSV.
 
+## Install
+
+### Using pip
+
+You can use pip to install Djehouty, make sure you have the latest version:
+
+    sh-4.2# pip install --upgrade pip
+    [...]
+    Successfully installed pip-7.1.2
+    
+    sh-4.2# pip install --upgrade djehouty
+    [...]
+    Successfully installed djehouty-0.1.0 setuptools-18.3.1
+
+### Using sources
+
+You can install from sources too:
+
+    sh-4.2$ git clone git@github.com:cdumay/djehouty.git
+    Cloning into 'djehouty'...
+    remote: Counting objects: 58, done.
+    remote: Compressing objects: 100% (53/53), done.
+    remote: Total 58 (delta 26), reused 0 (delta 0)
+    Receiving objects: 100% (58/58), 9.62 KiB | 0 bytes/s, done.
+    Resolving deltas: 100% (26/26), done.
+    Checking connectivity... done.
+    
+    sh-4.2$ cd djehouty
+    sh-4.2$ python setup.py install
+    [...]
+    Using /usr/lib/python2.7/site-packages
+    Finished processing dependencies for djehouty==0.1.0
+
 ## How to send logs
 
-The following examples assume that you already have an Flowgger 
+The following examples assume that you already have a Flowgger 
 (see the [Flowgger documentation](https://github.com/jedisct1/flowgger/wiki) 
 for more information) or a Graylog functional.
 
 To send log messages, just use the handler of the desired format with the
 following parameters:
 
-* **host** (required): The hostname or ip address of the flowgger.
+* **host** (required): The hostname or ip address of the server.
 * **port** (optional): The TCP port to use (default: 12200 for GELF, 5140 for
   LTSV).
 * **level** (optional): Sets the threshold for the handler (default: logging.NOTSET).
