@@ -71,7 +71,7 @@ following parameters:
 * **sock_timeout** (optional): Socket timeout is seconds (default: 1).
 * **null_character** (optional): Append a null character at the end of each message (required by Graylog for GELF).
 
-### With GELF (over TCP/TLS)
+### With GELF over TCP/TLS (Flowgger and Graylog)
     
     import logging
     from djehouty.gelf.handlers import GELFTCPSocketHandler
@@ -89,7 +89,7 @@ following parameters:
     
     gelf_logger.info('test')
 
-### With LTSV (over TCP/TLS)
+### With LTSV over TCP/TLS (Flowgger only)
 
     import logging
     from djehouty.ltsv.handlers import LTSVTCPSocketHandler
