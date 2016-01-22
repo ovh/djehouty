@@ -61,7 +61,6 @@ class TCPSocketHandler(SocketHandler):
         except (KeyboardInterrupt, SystemExit):
             raise
         except:
-            # Trying to solve https://interne.gmail.com/projects/browse/LOGS-224
             # RuntimeError: maximum recursion depth exceeded'.
             # self.handleError(record)
             # dropping record atm
