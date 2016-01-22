@@ -34,7 +34,7 @@ You can use pip to install Djehouty, make sure you have the latest version:
 
 You can install from sources too:
 
-    sh-4.2$ git clone git@github.com:cdumay/djehouty.git
+    sh-4.2$ git clone git@github.com:ovh/djehouty.git
     Cloning into 'djehouty'...
     remote: Counting objects: 58, done.
     remote: Compressing objects: 100% (53/53), done.
