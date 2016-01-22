@@ -2,7 +2,7 @@
 
 # Djehouty
 
-Djehouty is intended to be a set of logging formatters and handlers to easly send log entries.
+Djehouty is intended to be a set of logging formatters and handlers to easily send log entries.
 
 This package includes:
 
@@ -158,7 +158,3 @@ Output (GELF and LTSV):
 
     {"_lang": "en", "_file": "test_stdout.py", "_levelname": "INFO", "_relativeCreated": 11.034011840820312, "_processName": "MainProcess", "_thread": 140168491099904, "_exc_text": null, "_process": 28542, "version": "1.1", "_exc_info": null, "_facility": "djehouty", "short_message": "Hello cedric", "app": "djehouty-gelf", "_msecs": 308.2098960876465, "_pathname": "./test_stdout.py", "timestamp": 1440761245.30821, "_funcName": "<module>", "host": "linux-426s", "_threadName": "MainThread", "_module": "test_stdout", "level": 6, "_msg": "Hello %s", "_lineno": 30}
     relativeCreated:11.0340118408	process:28542	app:djehouty-ltsv	module:test_stdout	funcName:<module>	message:Hello cedric	facility:djehouty	filename:test_stdout.py	levelno:20	processName:MainProcess	lineno:30	msg:Hello %s	host:linux-426s	exc_text:	lang:en	thread:140168491099904	level:6	threadName:MainThread	msecs:308.209896088	pathname:./test_stdout.py	time:2015-08-28T11:27:25.308210Z	exc_info:	levelname:INFO
-
-## License
-
-Djehouty is availible under the [BSD 2-Clause License](https://opensource.org/licenses/BSD-2-Clause), see the `LICENSE` file for more information.
