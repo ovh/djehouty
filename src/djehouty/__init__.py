@@ -28,7 +28,8 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 """
-Djehouty is intended to be a set of logging formatters and handlers to easily send log entries.
+Djehouty is intended to be a set of logging formatters and handlers to easily
+send log entries.
 """
 
 import logging
@@ -42,13 +43,13 @@ SYSLOG_LEVELS = {
     logging.DEBUG: 7,
 }
 
-PY3 = sys.version_info[0] == 3
+PY_3 = sys.version_info[0] == 3
 
-if PY3:
-    STRING_TYPE = str
+if PY_3:
+    STRING_TYPE = (str,)
     INTEGER_TYPE = (int,)
     BASE_TYPES = (Exception, str, int, bool, float)
 else:
-    STRING_TYPE = basestring
+    STRING_TYPE = (basestring,)
     INTEGER_TYPE = (int, long)
     BASE_TYPES = (Exception, str, int, bool, float, unicode)

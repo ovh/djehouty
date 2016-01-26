@@ -28,18 +28,21 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 """
-Djehouty is intended to be a set of logging formatters and handlers to easily send log entries.
+Djehouty is intended to be a set of logging formatters and handlers to easily
+send log entries.
 """
 
 import logging
 from logging.handlers import SocketHandler
 import ssl
 import select
-from djehouty import PY3
+from djehouty import PY_3
 
 class TCPSocketHandler(SocketHandler):
     """TCPSocketHandler"""
-    def __init__(self, host, port=12201, use_tls=False, cert_reqs=ssl.CERT_NONE, ca_certs=None, sock_timeout=1, level=logging.NOTSET):
+    def __init__(self, host, port=12201, use_tls=False,
+                 cert_reqs=ssl.CERT_NONE, ca_certs=None,
+                 sock_timeout=1, level=logging.NOTSET):
         super(TCPSocketHandler, self).__init__(host, port)
         self.ca_certs = ca_certs
         self.cert_reqs = cert_reqs
@@ -51,20 +54,21 @@ class TCPSocketHandler(SocketHandler):
         """makeSocket"""
         sock = SocketHandler.makeSocket(self, timeout=self.sock_timeout)
         if self.use_tls is True:
-            return ssl.wrap_socket(sock, cert_reqs=self.cert_reqs, ca_certs=self.ca_certs)
+            return ssl.wrap_socket(sock, cert_reqs=self.cert_reqs,
+                   ca_certs=self.ca_certs)
         return sock
 
     def checkSocket(self):
         """checkSocket"""
         try:
-            r, w, e = select.select([self.sock], (), (), 0)
-            if len(r) > 0:
+            rlist = select.select([self.sock], (), (), 0)
+            if len(rlist) > 0:
                 data = bytearray(1024)
-                nb = r[0].recv_into(data, 1024)
-                if nb==0:
+                nbytes = rlist[0].recv_into(data, 1024)
+                if nbytes == 0:
                     return False
             return True
-        except Exception as err:
+        except:
             return False
 
     def emit(self, record):
@@ -78,11 +82,11 @@ class TCPSocketHandler(SocketHandler):
                 self.sock = None
 
         try:
-            s = self.makePickle(record)
-            if PY3:
-                self.send(bytes(s, 'UTF-8'))
+            pickle = self.makePickle(record)
+            if PY_3:
+                self.send(bytes(pickle, 'UTF-8'))
             else:
-                self.send(s)
+                self.send(pickle)
         except (KeyboardInterrupt, SystemExit):
             raise
         except:

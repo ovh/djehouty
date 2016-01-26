@@ -28,7 +28,8 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 """
-Djehouty is intended to be a set of logging formatters and handlers to easily send log entries.
+Djehouty is intended to be a set of logging formatters and handlers to easily
+send log entries.
 """
 
 import logging
@@ -47,7 +48,7 @@ class LTSVLoggerAdapter(logging.LoggerAdapter):
 
         new_msg = '{0}\t{1}'.format(
             msg,
-            '\t'.join('{0}:{1}'.format(*i) for i in kwargs.items()),
+	    "\t".join(['%s:%s' %i for i in kwargs.items()]),
         )
 
         return new_msg, new_kwargs

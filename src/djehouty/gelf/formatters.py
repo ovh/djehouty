@@ -28,25 +28,14 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 """
-Djehouty is intended to be a set of logging formatters and handlers to easily send log entries.
+Djehouty is intended to be a set of logging formatters and handlers to easily
+send log entries.
 """
 
-import sys
 import socket
 import logging
 import json
-from djehouty import SYSLOG_LEVELS
-
-PY3 = sys.version_info[0] == 3
-
-if PY3:
-    string_type = str
-    integer_type = (int,)
-    base_types = (Exception, str, int, bool, float)
-else:
-    string_type = basestring
-    integer_type = (int, long)
-    base_types = (Exception, str, int, bool, float, unicode)
+from djehouty import SYSLOG_LEVELS, STRING_TYPE, INTEGER_TYPE
 
 class GELFFormatter(logging.Formatter):
     """GELFFormatter"""
@@ -56,37 +45,43 @@ class GELFFormatter(logging.Formatter):
         'name'          : '_facility',
         'filename'      : '_file',
     }
-    
-    def __init__(self, static_fields=dict(), null_character=False):
+
+    def __init__(self, static_fields=None, null_character=False):
         super(GELFFormatter, self).__init__()
+        if static_fields is None:
+            static_fields = dict()
         self.static_fields = static_fields
         self.hostname = socket.gethostname()
         self.null_character = null_character
-   
+
     def format(self, record):
         """docstring for format"""
-        rec  = dict(vars(record))
+        rec = dict(vars(record))
         rec.update(**self.static_fields)
         data = dict(
-            version         = "1.1",
-            host            = self.hostname,
-            short_message   = record.getMessage(),
-            level           = SYSLOG_LEVELS.get(rec.pop('levelno')),
+            version="1.1",
+            host=self.hostname,
+            short_message=record.getMessage(),
+            level=SYSLOG_LEVELS.get(rec.pop('levelno')),
         )
-        
-        # we removed args 
-        map(rec.pop, ('args',))
+
+        # we removed args
+        rec.pop('args')
 
         for attr, value in rec.items():
-            key = self.default_fields[attr] if attr in self.default_fields.keys() else "_%s" % attr
-            if isinstance(value, (string_type, float) + integer_type) or value is None:
+            if attr in self.default_fields.keys():
+                key = self.default_fields[attr]
+            else:
+                key = "_%s" % attr
+            check_str = isinstance(value, (STRING_TYPE, float) + INTEGER_TYPE)
+            if check_str or value is None:
                 data[key] = value
             else:
                 try:
                     data[key] = repr(value)
                 except:
                     pass
-        
+
         out = json.dumps(data)
         if self.null_character == True:
             out += '\0'
