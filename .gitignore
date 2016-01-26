@@ -1,6 +1,5 @@
 src/*.egg-info
 *.pyc
-tests/
 dist/
 build/
 deb_dist/

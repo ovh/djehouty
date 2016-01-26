@@ -53,8 +53,8 @@ setup(
     author_email='cedric.dumay@corp.ovh.com',
     url='https://github.com/ovh/djehouty',
     license='BSD',
-    packages=find_packages('src'),
-    package_dir={'': 'src'},
+    packages=find_packages('djehouty'),
+    package_dir={'': 'djehouty'},
     include_package_data=True,
     zip_safe=True,
     install_requires=(
