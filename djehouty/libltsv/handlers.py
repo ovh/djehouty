@@ -28,28 +28,24 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 """
-Djehouty is intended to be a set of logging formatters and handlers to easily send log entries.
+Djehouty intends to be a set of logging formatters and handlers to easily
+send log entries.
 """
 
-import time
-import datetime
+import ssl
+import logging
+from djehouty.tcp import TCPSocketHandler
+from djehouty.ltsv.formatters import LTSVFormatter
 
-TIMESTAMP = time.time()
-TZDELTA = datetime.datetime.fromtimestamp(TIMESTAMP) - datetime.datetime.utcfromtimestamp(TIMESTAMP)
+class LTSVTCPSocketHandler(TCPSocketHandler):
+    """Graylog Extended Log Format handler using TCP"""
 
-class LocalTimeZone(datetime.tzinfo):
-    """LocalTimeZone"""
-    def __init__(self, *args, **kw):
-        super(LocalTimeZone, self).__init__(*args, **kw)
-        self.tzdelta = TZDELTA
-
-    def utcoffset(self, dt):
-        """utcoffset"""
-        return self.tzdelta
-
-    def dst(self, dt):
-        """dst"""
-        return datetime.timedelta(0)
-
-LTZ = LocalTimeZone()
-
+    def __init__(self, host, port=5140, use_tls=False, cert_reqs=ssl.CERT_NONE,
+                 ca_certs=None, static_fields=None, sock_timeout=1,
+                 level=logging.NOTSET, null_character=False):
+        super(LTSVTCPSocketHandler, self).__init__(host, port, use_tls,
+              cert_reqs, ca_certs, sock_timeout, level)
+        if static_fields == None:
+            static_fields = {}
+        self.setFormatter(LTSVFormatter(static_fields,
+                          null_character=null_character))

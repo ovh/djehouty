@@ -32,36 +32,24 @@ Djehouty intends to be a set of logging formatters and handlers to easily
 send log entries.
 """
 
-from setuptools import setup, find_packages
+import logging
+import sys
 
-VERSION = '0.1.0'
+SYSLOG_LEVELS = {
+    logging.CRITICAL: 2,
+    logging.ERROR: 3,
+    logging.WARNING: 4,
+    logging.INFO: 6,
+    logging.DEBUG: 7,
+}
 
-setup(
-    name='djehouty',
-    version=VERSION,
-    description="Djehouty intends to be a set of logging formatters and " +
-		"handlers to easily send log entries.",
-    long_description="""""",
-    classifiers=[
-        "License :: OSI Approved :: BSD License",
-        "Operating System :: POSIX",
-        "Programming Language :: Python",
-        "Programming Language :: Python :: 2",
-    ],
-    keywords='GELF, LTSV',
-    author='Cedric DUMAY',
-    author_email='cedric.dumay@corp.ovh.com',
-    url='https://github.com/ovh/djehouty',
-    license='BSD',
-    packages=find_packages('djehouty'),
-    package_dir={'': 'djehouty'},
-    include_package_data=True,
-    zip_safe=True,
-    test_suite="tests",
-    install_requires=(
-        'distribute', 'ltsv', 'testfixtures',
-    ),
-    entry_points="""
-""",
-)
+PY_3 = sys.version_info[0] == 3
 
+if PY_3:
+    STRING_TYPE = (str,)
+    INTEGER_TYPE = (int,)
+    BASE_TYPES = (Exception, str, int, bool, float)
+else:
+    STRING_TYPE = (basestring,)
+    INTEGER_TYPE = (int, long)
+    BASE_TYPES = (Exception, str, int, bool, float, unicode)

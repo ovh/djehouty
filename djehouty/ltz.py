@@ -28,27 +28,31 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 """
-Djehouty is intended to be a set of logging formatters and handlers to easily send log entries.
+Djehouty intends to be a set of logging formatters and handlers to easily
+send log entries.
 """
 
-import logging
-import sys
+import time
+import datetime
 
-SYSLOG_LEVELS = {
-    logging.CRITICAL: 2,
-    logging.ERROR: 3,
-    logging.WARNING: 4,
-    logging.INFO: 6,
-    logging.DEBUG: 7,
-}
+TIMESTAMP = time.time()
+FROM_TS = datetime.datetime.fromtimestamp(TIMESTAMP)
+FROM_UTC = datetime.datetime.utcfromtimestamp(TIMESTAMP)
+TZDELTA = FROM_TS - FROM_UTC
 
-PY3 = sys.version_info[0] == 3
+class LocalTimeZone(datetime.tzinfo):
+    """LocalTimeZone"""
+    def __init__(self, *args, **kw):
+        super(LocalTimeZone, self).__init__(*args, **kw)
+        self.tzdelta = TZDELTA
 
-if PY3:
-    STRING_TYPE = str
-    INTEGER_TYPE = (int,)
-    BASE_TYPES = (Exception, str, int, bool, float)
-else:
-    STRING_TYPE = basestring
-    INTEGER_TYPE = (int, long)
-    BASE_TYPES = (Exception, str, int, bool, float, unicode)
+    def utcoffset(self):
+        """utcoffset"""
+        return self.tzdelta
+
+    def dst(self):
+        """dst"""
+        return datetime.timedelta(0)
+
+LTZ = LocalTimeZone()
+
