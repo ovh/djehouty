@@ -35,7 +35,7 @@ send log entries.
 import ssl
 import logging
 from djehouty.tcp import TCPSocketHandler
-from djehouty.ltsv.formatters import LTSVFormatter
+from djehouty.libltsv.formatters import LTSVFormatter
 
 class LTSVTCPSocketHandler(TCPSocketHandler):
     """Graylog Extended Log Format handler using TCP"""

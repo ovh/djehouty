@@ -35,7 +35,7 @@ send log entries.
 import ssl
 import logging
 from djehouty.tcp import TCPSocketHandler
-from djehouty.gelf.formatters import GELFFormatter
+from djehouty.libgelf.formatters import GELFFormatter
 
 class GELFTCPSocketHandler(TCPSocketHandler):
     """Graylog Extended Log Format handler using TCP
