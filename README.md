@@ -74,7 +74,7 @@ following parameters:
 ### With GELF over TCP/TLS (Flowgger and Graylog)
     
     import logging
-    from djehouty.gelf.handlers import GELFTCPSocketHandler
+    from djehouty.libgelf.handlers import GELFTCPSocketHandler
 
     gelf_logger = logging.getLogger('djehouty-gelf')
     gelf_logger.setLevel(logging.DEBUG)
@@ -92,7 +92,7 @@ following parameters:
 ### With LTSV over TCP/TLS (Flowgger only)
 
     import logging
-    from djehouty.ltsv.handlers import LTSVTCPSocketHandler
+    from djehouty.libltsv.handlers import LTSVTCPSocketHandler
 
     ltsv_logger = logging.getLogger('djehouty-ltsv')
     ltsv_logger.setLevel(logging.DEBUG) 
@@ -134,8 +134,8 @@ The following example format each log record into GELF and LTSV:
 
     import sys
     import logging
-    from djehouty.gelf.formatters import GELFFormatter
-    from djehouty.ltsv.formatters import LTSVFormatter
+    from djehouty.libgelf.formatters import GELFFormatter
+    from djehouty.libltsv.formatters import LTSVFormatter
 
     logger = logging.getLogger('djehouty')
     logger.setLevel(logging.DEBUG)
