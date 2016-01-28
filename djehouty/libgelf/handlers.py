@@ -28,7 +28,7 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 """
-Djehouty is intended to be a set of logging formatters and handlers to easily
+Djehouty intends to be a set of logging formatters and handlers to easily
 send log entries.
 """
 

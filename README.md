@@ -2,7 +2,7 @@
 
 # Djehouty
 
-Djehouty is intended to be a set of logging formatters and handlers to easily send log entries.
+Djehouty intends to be a set of logging formatters and handlers to easily send log entries.
 
 This package includes:
 
