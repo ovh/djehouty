@@ -44,9 +44,9 @@ class GELFTCPSocketHandler(TCPSocketHandler):
     def __init__(self, host, port=12200, use_tls=False, cert_reqs=ssl.CERT_NONE,
                  ca_certs=None, static_fields=None, sock_timeout=1,
                  level=logging.NOTSET, null_character=False):
-        super(GELFTCPSocketHandler, self).__init__(host, port, use_tls,
+        super(GELFTCPSocketHandler, self).__init__(host, port, use_tls, \
               cert_reqs, ca_certs, sock_timeout, level)
         if static_fields == None:
             static_fields = {}
-        self.setFormatter(GELFFormatter(static_fields,
+        self.setFormatter(GELFFormatter(static_fields, \
                                         null_character=null_character))

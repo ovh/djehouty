@@ -47,8 +47,7 @@ class LTSVLoggerAdapter(logging.LoggerAdapter):
                 new_kwargs[attr] = kwargs.pop(attr)
 
         new_msg = '{0}\t{1}'.format(
-            msg,
-	    "\t".join(['%s:%s' %i for i in kwargs.items()]),
+            msg, "\t".join(['%s:%s' %i for i in kwargs.items()])
         )
 
         return new_msg, new_kwargs

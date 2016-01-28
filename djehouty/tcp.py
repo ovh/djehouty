@@ -54,7 +54,7 @@ class TCPSocketHandler(SocketHandler):
         """makeSocket"""
         sock = SocketHandler.makeSocket(self, timeout=self.sock_timeout)
         if self.use_tls is True:
-            return ssl.wrap_socket(sock, cert_reqs=self.cert_reqs,
+            return ssl.wrap_socket(sock, cert_reqs=self.cert_reqs, \
                    ca_certs=self.ca_certs)
         return sock
 
