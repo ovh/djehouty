@@ -47,7 +47,7 @@ class GELFFormatter(logging.Formatter):
     }
 
     def __init__(self, static_fields=None, null_character=False):
-        super(GELFFormatter, self).__init__()
+        logging.Formatter.__init__(self)
         if static_fields is None:
             static_fields = dict()
         self.static_fields = static_fields
