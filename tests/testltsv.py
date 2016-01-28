@@ -34,23 +34,23 @@ send log entries.
 
 import unittest
 import logging
-import json
 import StringIO
+import ltsv
 
-from djehouty.gelf.formatters import GELFFormatter
+from djehouty.libltsv.formatters import LTSVFormatter
 from testfixtures import log_capture
 
-class GelfTestCase(unittest.TestCase):
-    """ Test our GELF formatter """
+class LTSVTestCase(unittest.TestCase):
+    """ Test our LTSV formatter """
 
     def setUp(self):
         """"""
-        self.logger = logging.getLogger('djehouty-gelf')
+        self.logger = logging.getLogger('djehouty-ltsv')
         self.logger.setLevel(logging.DEBUG)
         self.buffer = StringIO.StringIO()
         self.log_handler = logging.StreamHandler(self.buffer)
         self.log_handler.setFormatter(
-                 GELFFormatter(static_fields={"app": 'djehouty-gelf'})
+                 LTSVFormatter(static_fields={"app": 'djehouty-ltsv'})
         )
         self.logger.addHandler(self.log_handler)
 
@@ -61,33 +61,35 @@ class GelfTestCase(unittest.TestCase):
         self.logger.error('Where is john doe?')
         self.logger.info('start of block number %i', 1)
         capture.check(
-            ('djehouty-gelf', 'INFO', 'hello world'),
-            ('djehouty-gelf', 'ERROR', 'Where is john doe?'),
-            ('djehouty-gelf', 'INFO', 'start of block number 1'),
+            ('djehouty-ltsv', 'INFO', 'hello world'),
+            ('djehouty-ltsv', 'ERROR', 'Where is john doe?'),
+            ('djehouty-ltsv', 'INFO', 'start of block number 1'),
         )
 
     def test_simple_message(self):
         """ Testing format with a common message """
         msg = "testing logging format"
         self.logger.info(msg)
-        json_object = json.loads(self.buffer.getvalue())
-        self.assertEqual(json_object["_msg"], msg)
-        self.assertEqual(json_object["_levelname"], "INFO")
-        self.assertEqual(json_object["level"], 6)
-        self.assertEqual(json_object["version"], "1.1")
-        self.assertEqual(json_object["_app"], "djehouty-gelf")
-        self.assertEqual(json_object["_funcName"], "test_simple_message")
+        ltsv_object = ltsv.reader(self.buffer.getvalue().splitlines())
+        for line in ltsv_object:
+            cell = dict(line)
+            self.assertEqual(cell["msg"], msg)
+            self.assertEqual(cell["levelname"], "INFO")
+            self.assertEqual(cell["level"], "6")
+            self.assertEqual(cell["app"], "djehouty-ltsv")
+            self.assertEqual(cell["funcName"], "test_simple_message")
 
     def test_complex_message(self):
         """ Testing format with extra values """
         msg = "testing logging format"
         self.logger.info(msg, extra={"lang": 'en', "env": 'test'})
-        json_object = json.loads(self.buffer.getvalue())
-        self.assertEqual(json_object["_msg"], msg)
-        self.assertEqual(json_object["_levelname"], "INFO")
-        self.assertEqual(json_object["level"], 6)
-        self.assertEqual(json_object["version"], "1.1")
-        self.assertEqual(json_object["_app"], "djehouty-gelf")
-        self.assertEqual(json_object["_funcName"], "test_complex_message")
-        self.assertEqual(json_object["_lang"], "en")
-        self.assertEqual(json_object["_env"], "test")
+        ltsv_object = ltsv.reader(self.buffer.getvalue().splitlines())
+        for line in ltsv_object:
+            cell = dict(line)
+            self.assertEqual(cell["msg"], msg)
+            self.assertEqual(cell["levelname"], "INFO")
+            self.assertEqual(cell["level"], "6")
+            self.assertEqual(cell["app"], "djehouty-ltsv")
+            self.assertEqual(cell["funcName"], "test_complex_message")
+            self.assertEqual(cell["lang"], "en")
+            self.assertEqual(cell["env"], "test")

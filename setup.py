@@ -59,7 +59,7 @@ setup(
     zip_safe=True,
     test_suite="tests",
     install_requires=(
-        'distribute',
+        'distribute', 'ltsv', 'testfixtures',
     ),
     entry_points="""
 """,
