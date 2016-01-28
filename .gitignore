@@ -4,3 +4,4 @@ dist/
 build/
 deb_dist/
 *.tar.gz
+djehouty/djehouty.egg-info/

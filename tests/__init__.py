@@ -32,36 +32,3 @@ Djehouty is intended to be a set of logging formatters and handlers to easily
 send log entries.
 """
 
-from setuptools import setup, find_packages
-
-VERSION = '0.1.0'
-
-setup(
-    name='djehouty',
-    version=VERSION,
-    description="Djehouty is intended to be a set of logging formatters and " +
-		"handlers to easily send log entries.",
-    long_description="""""",
-    classifiers=[
-        "License :: OSI Approved :: BSD License",
-        "Operating System :: POSIX",
-        "Programming Language :: Python",
-        "Programming Language :: Python :: 2",
-    ],
-    keywords='GELF, LTSV',
-    author='Cedric DUMAY',
-    author_email='cedric.dumay@corp.ovh.com',
-    url='https://github.com/ovh/djehouty',
-    license='BSD',
-    packages=find_packages('djehouty'),
-    package_dir={'': 'djehouty'},
-    include_package_data=True,
-    zip_safe=True,
-    test_suite="tests",
-    install_requires=(
-        'distribute',
-    ),
-    entry_points="""
-""",
-)
-
