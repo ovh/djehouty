@@ -48,7 +48,7 @@ class LTSVFormatter(logging.Formatter):
     default_datefmt = '%Y-%m-%dT%H:%M:%S.%fZ'
 
     def __init__(self, static_fields=None, null_character=False):
-        super(LTSVFormatter, self).__init__()
+        logging.Formatter.__init__(self)
         if static_fields == None:
             static_fields = dict()
         self.static_fields = static_fields
