@@ -34,7 +34,7 @@ send log entries.
 
 from setuptools import setup, find_packages
 
-VERSION = '0.1.1'
+VERSION = '0.1.2'
 
 setup(
     name='djehouty',
