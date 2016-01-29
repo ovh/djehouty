@@ -34,7 +34,7 @@ send log entries.
 
 from setuptools import setup, find_packages
 
-VERSION = '0.1.2'
+VERSION = '0.1.3'
 
 setup(
     name='djehouty',
@@ -53,8 +53,8 @@ setup(
     author_email='cedric.dumay@corp.ovh.com',
     url='https://github.com/ovh/djehouty',
     license='BSD',
-    packages=find_packages('djehouty'),
-    package_dir={'': 'djehouty'},
+    packages=find_packages('src'),
+    package_dir={'': 'src'},
     include_package_data=True,
     zip_safe=True,
     test_suite="tests",
