@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/ovh/djehouty.svg?branch=master)](https://travis-ci.org/cdumay/djehouty)
+[![Build Status](https://travis-ci.org/ovh/djehouty.svg?branch=master)](https://travis-ci.org/ovh/djehouty)
 
 # Djehouty
 
