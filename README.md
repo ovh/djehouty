@@ -28,7 +28,7 @@ You can use pip to install Djehouty, make sure you have the latest version:
     
     sh-4.2# pip install --upgrade djehouty
     [...]
-    Successfully installed djehouty-0.1.0 setuptools-18.3.1
+    Successfully installed djehouty-<version> setuptools-18.3.1
 
 ### Using sources
 
@@ -47,7 +47,7 @@ You can install from sources too:
     sh-4.2$ python setup.py install
     [...]
     Using /usr/lib/python2.7/site-packages
-    Finished processing dependencies for djehouty==0.1.0
+    Finished processing dependencies for djehouty==<version>
 
 ## How to send logs
 
