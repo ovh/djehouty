@@ -35,7 +35,11 @@ send log entries.
 import unittest
 import logging
 import json
-import StringIO
+
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
 
 from djehouty.libgelf.formatters import GELFFormatter
 from testfixtures import log_capture
@@ -47,7 +51,7 @@ class GelfTestCase(unittest.TestCase):
         """"""
         self.logger = logging.getLogger('djehouty-gelf')
         self.logger.setLevel(logging.DEBUG)
-        self.buffer = StringIO.StringIO()
+        self.buffer = StringIO()
         self.log_handler = logging.StreamHandler(self.buffer)
         self.log_handler.setFormatter(
                  GELFFormatter(static_fields={"app": 'djehouty-gelf'})

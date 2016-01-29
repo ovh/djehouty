@@ -34,8 +34,12 @@ send log entries.
 
 import unittest
 import logging
-import StringIO
 import ltsv
+
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
 
 from djehouty.libltsv.formatters import LTSVFormatter
 from testfixtures import log_capture
@@ -47,7 +51,7 @@ class LTSVTestCase(unittest.TestCase):
         """"""
         self.logger = logging.getLogger('djehouty-ltsv')
         self.logger.setLevel(logging.DEBUG)
-        self.buffer = StringIO.StringIO()
+        self.buffer = StringIO()
         self.log_handler = logging.StreamHandler(self.buffer)
         self.log_handler.setFormatter(
                  LTSVFormatter(static_fields={"app": 'djehouty-ltsv'})
