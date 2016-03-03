@@ -34,7 +34,7 @@ send log entries.
 
 from setuptools import setup, find_packages
 
-VERSION = '0.1.3'
+VERSION = '0.1.4'
 
 setup(
     name='djehouty',
@@ -59,7 +59,7 @@ setup(
     zip_safe=True,
     test_suite="tests",
     install_requires=(
-        'distribute', 'ltsv', 'testfixtures',
+        'ltsv', 'testfixtures',
     ),
     entry_points="""
 """,
