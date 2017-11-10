@@ -61,7 +61,7 @@ class TCPSocketHandler(SocketHandler):
     def checkSocket(self):
         """checkSocket"""
         try:
-            rlist = select.select([self.sock], (), (), 0)
+            rlist, wlist, xlist = select.select((self.sock,), (), (), 0)
             if len(rlist) > 0:
                 data = bytearray(1024)
                 nbytes = rlist[0].recv_into(data, 1024)
