@@ -1,19 +1,16 @@
 language: python
 python:
-  - "2.6"
   - "2.7"
-  - "3.3"
-  - "3.4"
   - "3.5"
-  - "pypy"
 install:
   - pip install .
 script:
   - python setup.py test
 deploy:
   provider: pypi
-  user: "cdumay"
+  user: cdumay
   password:
     secure: KOdNdRbem/BXLfHeioTCE5SnamhNCQcqs107u9KIVKj2ApZvUIstTYcv+tjZAB1FkQ+o1mhK4yE9DL7p6POTmAEQemWh2TwLy5A03WZCq6Il7O+qdHc1x7N5n8IPkaXs+LwQPtXUEkrOCgQTKDmiTRU1K+N7RL5XEpbv2dXwo+8WLbRCJ6j4wVg8zxG+oXQfKiGkcXO0D3OL1rtoeIoAdBL6m2gmlnBrYQ6k+ftKfHlwcZaA1BvoPtejR8y8Ap3qbrozrawmcIu5/0XDOnIvxf1pJqYhaV05uq8QI7r/BDQAaeRVGuWkWzUwoOjlzmYaiKmfMKFT/EZ1+BpIhcOjUy/lGpOkjY5xJCxJ7Im5mLTvA1DPSNOPRitbBx01g2j7tyITb8hdiFfcHMExFo1x7O6BRLAW7plWzXtXPR69pHGbII00taA80+TV4P2JxZ0D1icSjqa2nv0S7zykl3Gh65w63lQVBe9FlUy0Zu+6bm94yQCMe4mf43SJ9DORgZkhPAd7a9dTu+sBw7x5r0gYwadYyDYyxzRXEyj9i+8DrY9AVgqpqYsKQN2pncwpKyQKwQYsX0208Puyb1o8mw33YZfWadUKLWcafyI8QZcVXDadPgPdUtW+G++/ZZI1okcsbverP40qynUpQLRut/qUu5a8BBNI2nN59h8KaS9BXT8=
   on:
-    tags
+    tags: true
+    repo: ovh/djehouty
