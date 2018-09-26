@@ -54,7 +54,7 @@ class GELFFormatter(logging.Formatter):
         self.hostname = socket.gethostname()
         self.null_character = null_character
 
-    def format(self, record):
+    def format_to_dic(self, record):
         """docstring for format"""
         rec = dict(vars(record))
         rec.update(**self.static_fields)
@@ -82,7 +82,14 @@ class GELFFormatter(logging.Formatter):
                 except:
                     pass
 
-        out = json.dumps(data)
+        return data
+
+    def dic_to_json(self, dic):
+        out = json.dumps(dic)
         if self.null_character == True:
             out += '\0'
         return out
+
+    def format(self, record):
+        dic = self.format_to_dic(record)
+        return self.dic_to_json(dic)
