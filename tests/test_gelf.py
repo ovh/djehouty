@@ -53,9 +53,8 @@ class GelfTestCase(unittest.TestCase):
         self.logger.setLevel(logging.DEBUG)
         self.buffer = StringIO()
         self.log_handler = logging.StreamHandler(self.buffer)
-        self.log_handler.setFormatter(
-                 GELFFormatter(static_fields={"app": 'djehouty-gelf'})
-        )
+        self.formatter = GELFFormatter(static_fields={"app": 'djehouty-gelf'})
+        self.log_handler.setFormatter(self.formatter)
         self.logger.addHandler(self.log_handler)
 
     @log_capture()
@@ -95,3 +94,13 @@ class GelfTestCase(unittest.TestCase):
         self.assertEqual(json_object["_funcName"], "test_complex_message")
         self.assertEqual(json_object["_lang"], "en")
         self.assertEqual(json_object["_env"], "test")
+
+    def test_extract_file_from_log_record(self):
+        log_record = logging.makeLogRecord({"filename": "test.py"})
+        json_object = json.loads(self.formatter.format(log_record))
+        self.assertEqual(json_object["_file"], "test.py")  # we extract to _file and not file because file is deprecated
+
+    def test_extract_line_from_log_record(self):
+        log_record = logging.makeLogRecord({"lineno": 42})
+        json_object = json.loads(self.formatter.format(log_record))
+        self.assertEqual(json_object["line"], 42)

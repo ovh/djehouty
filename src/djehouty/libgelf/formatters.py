@@ -43,7 +43,8 @@ class GELFFormatter(logging.Formatter):
     default_fields = {
         'created'       : 'timestamp',
         'name'          : '_facility',
-        'filename'      : '_file',
+        'filename'      : '_file',  # we extract to _file and not file because file is deprecated
+        'lineno'        : 'line',
     }
 
     def __init__(self, static_fields=None, null_character=False):
