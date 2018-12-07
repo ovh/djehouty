@@ -22,32 +22,19 @@ This package includes:
 
 You can use pip to install Djehouty, make sure you have the latest version:
 
-    sh-4.2# pip install --upgrade pip
-    [...]
-    Successfully installed pip-7.1.2
-    
-    sh-4.2# pip install --upgrade djehouty
-    [...]
-    Successfully installed djehouty-<version> setuptools-18.3.1
+```shell
+pip install --upgrade djehouty
+```
 
 ### Using sources
 
 You can install from sources too:
 
-    sh-4.2$ git clone git@github.com:ovh/djehouty.git
-    Cloning into 'djehouty'...
-    remote: Counting objects: 58, done.
-    remote: Compressing objects: 100% (53/53), done.
-    remote: Total 58 (delta 26), reused 0 (delta 0)
-    Receiving objects: 100% (58/58), 9.62 KiB | 0 bytes/s, done.
-    Resolving deltas: 100% (26/26), done.
-    Checking connectivity... done.
-    
-    sh-4.2$ cd djehouty
-    sh-4.2$ python setup.py install
-    [...]
-    Using /usr/lib/python2.7/site-packages
-    Finished processing dependencies for djehouty==<version>
+```shell
+git clone git@github.com:ovh/djehouty.git
+cd djehouty
+python setup.py install
+```
 
 ## How to send logs
 
