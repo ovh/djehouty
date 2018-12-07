@@ -72,40 +72,43 @@ following parameters:
 * **null_character** (optional): Append a null character at the end of each message (required by Graylog for GELF).
 
 ### With GELF over TCP/TLS (Flowgger and Graylog)
-    
-    import logging
-    from djehouty.libgelf.handlers import GELFTCPSocketHandler
 
-    gelf_logger = logging.getLogger('djehouty-gelf')
-    gelf_logger.setLevel(logging.DEBUG)
-    gelf_logger.addHandler(GELFTCPSocketHandler(
-        host            = "127.0.0.1", 
-        port            = 5140, 
-        static_fields   = {"app": 'djehouty-gelf'}, 
-        use_tls         = True,
-        level           = logging.DEBUG,
-        null_character  = True,
-    ))
-    
-    gelf_logger.info('test')
+```python
+import logging
+from djehouty.libgelf.handlers import GELFTCPSocketHandler
+
+gelf_logger = logging.getLogger('djehouty-gelf')
+gelf_logger.setLevel(logging.DEBUG)
+gelf_logger.addHandler(GELFTCPSocketHandler(
+    host            = "127.0.0.1", 
+    port            = 5140, 
+    static_fields   = {"app": 'djehouty-gelf'}, 
+    use_tls         = True,
+    level           = logging.DEBUG,
+    null_character  = True,
+))
+
+gelf_logger.info('test')
+```
 
 ### With LTSV over TCP/TLS (Flowgger only)
 
-    import logging
-    from djehouty.libltsv.handlers import LTSVTCPSocketHandler
+```python
+import logging
+from djehouty.libltsv.handlers import LTSVTCPSocketHandler
 
-    ltsv_logger = logging.getLogger('djehouty-ltsv')
-    ltsv_logger.setLevel(logging.DEBUG) 
-    ltsv_logger.addHandler(LTSVTCPSocketHandler(
-        host            = "127.0.0.1", 
-        port            = 5140, 
-        static_fields   = {"app": 'djehouty-ltsv'}, 
-        use_tls         = True,
-        level           = logging.DEBUG
-    ))
-    
-    ltsv_logger.info('test')
+ltsv_logger = logging.getLogger('djehouty-ltsv')
+ltsv_logger.setLevel(logging.DEBUG) 
+ltsv_logger.addHandler(LTSVTCPSocketHandler(
+    host            = "127.0.0.1", 
+    port            = 5140, 
+    static_fields   = {"app": 'djehouty-ltsv'}, 
+    use_tls         = True,
+    level           = logging.DEBUG
+))
 
+ltsv_logger.info('test')
+```
 
 ## Send additional meta data
 
@@ -114,16 +117,20 @@ extra.
 
 The following example uses the LTSV logger defined above:
 
-    mylogger = logging.LoggerAdapter(
-        ltsv_logger,
-        extra = {"myvar": 5}
-    )
-    mylogger.info('test')
+```python
+mylogger = logging.LoggerAdapter(
+    ltsv_logger,
+    extra = {"myvar": 5}
+)
+mylogger.info('test')
+```
 
 You can add specific log meta for each entry using the extra parameter, the following example uses the LTSV logger defined above:
 
-    ltsv_logger.info("Hello '%s'", 'Cedric', extra={"lang": 'en'})
-    ltsv_logger.info("Bonjour '%s'", 'Cedric', extra={"lang": 'fr'})
+```python
+ltsv_logger.info("Hello '%s'", 'Cedric', extra={"lang": 'en'})
+ltsv_logger.info("Bonjour '%s'", 'Cedric', extra={"lang": 'fr'})
+```
 
 ## Other transport
 
@@ -132,29 +139,33 @@ files.
 
 The following example format each log record into GELF and LTSV:
 
-    import sys
-    import logging
-    from djehouty.libgelf.formatters import GELFFormatter
-    from djehouty.libltsv.formatters import LTSVFormatter
+```python
+import sys
+import logging
+from djehouty.libgelf.formatters import GELFFormatter
+from djehouty.libltsv.formatters import LTSVFormatter
 
-    logger = logging.getLogger('djehouty')
-    logger.setLevel(logging.DEBUG)
+logger = logging.getLogger('djehouty')
+logger.setLevel(logging.DEBUG)
 
-    # GELF
-    hdr = logging.StreamHandler(sys.stdout)
-    hdr.setLevel(logging.DEBUG)
-    hdr.setFormatter(GELFFormatter(static_fields={"app": 'djehouty-gelf'}))
-    logger.addHandler(hdr)
+# GELF
+hdr = logging.StreamHandler(sys.stdout)
+hdr.setLevel(logging.DEBUG)
+hdr.setFormatter(GELFFormatter(static_fields={"app": 'djehouty-gelf'}))
+logger.addHandler(hdr)
 
-    # LTSV
-    hdr = logging.StreamHandler(sys.stdout)
-    hdr.setLevel(logging.DEBUG)
-    hdr.setFormatter(LTSVFormatter(static_fields={"app": 'djehouty-ltsv'}))
-    logger.addHandler(hdr)
+# LTSV
+hdr = logging.StreamHandler(sys.stdout)
+hdr.setLevel(logging.DEBUG)
+hdr.setFormatter(LTSVFormatter(static_fields={"app": 'djehouty-ltsv'}))
+logger.addHandler(hdr)
 
-    logger.info("Hello %s", 'cedric', extra={"lang": 'en'})
+logger.info("Hello %s", 'cedric', extra={"lang": 'en'})
+```
 
 Output (GELF and LTSV):
 
-    {"_lang": "en", "_file": "test_stdout.py", "_levelname": "INFO", "_relativeCreated": 11.034011840820312, "_processName": "MainProcess", "_thread": 140168491099904, "_exc_text": null, "_process": 28542, "version": "1.1", "_exc_info": null, "_facility": "djehouty", "short_message": "Hello cedric", "app": "djehouty-gelf", "_msecs": 308.2098960876465, "_pathname": "./test_stdout.py", "timestamp": 1440761245.30821, "_funcName": "<module>", "host": "linux-426s", "_threadName": "MainThread", "_module": "test_stdout", "level": 6, "_msg": "Hello %s", "_lineno": 30}
-    relativeCreated:11.0340118408	process:28542	app:djehouty-ltsv	module:test_stdout	funcName:<module>	message:Hello cedric	facility:djehouty	filename:test_stdout.py	levelno:20	processName:MainProcess	lineno:30	msg:Hello %s	host:linux-426s	exc_text:	lang:en	thread:140168491099904	level:6	threadName:MainThread	msecs:308.209896088	pathname:./test_stdout.py	time:2015-08-28T11:27:25.308210Z	exc_info:	levelname:INFO
+```shell
+{"_lang": "en", "_file": "test_stdout.py", "_levelname": "INFO", "_relativeCreated": 11.034011840820312, "_processName": "MainProcess", "_thread": 140168491099904, "_exc_text": null, "_process": 28542, "version": "1.1", "_exc_info": null, "_facility": "djehouty", "short_message": "Hello cedric", "app": "djehouty-gelf", "_msecs": 308.2098960876465, "_pathname": "./test_stdout.py", "timestamp": 1440761245.30821, "_funcName": "<module>", "host": "linux-426s", "_threadName": "MainThread", "_module": "test_stdout", "level": 6, "_msg": "Hello %s", "_lineno": 30}
+relativeCreated:11.0340118408	process:28542	app:djehouty-ltsv	module:test_stdout	funcName:<module>	message:Hello cedric	facility:djehouty	filename:test_stdout.py	levelno:20	processName:MainProcess	lineno:30	msg:Hello %s	host:linux-426s	exc_text:	lang:en	thread:140168491099904	level:6	threadName:MainThread	msecs:308.209896088	pathname:./test_stdout.py	time:2015-08-28T11:27:25.308210Z	exc_info:	levelname:INFO
+```
