@@ -33,13 +33,18 @@ send log entries.
 """
 
 import logging
-from logging.handlers import SocketHandler
-import ssl
+from platform import python_version
 import select
+import ssl
+from distutils.version import LooseVersion
+from logging.handlers import SocketHandler
+
 from djehouty import PY_3
+
 
 class TCPSocketHandler(SocketHandler):
     """TCPSocketHandler"""
+
     def __init__(self, host, port=12201, use_tls=False,
                  cert_reqs=ssl.CERT_NONE, ca_certs=None,
                  sock_timeout=1, level=logging.NOTSET):
@@ -54,8 +59,13 @@ class TCPSocketHandler(SocketHandler):
         """makeSocket"""
         sock = SocketHandler.makeSocket(self, timeout=self.sock_timeout)
         if self.use_tls is True:
-            return ssl.wrap_socket(sock, cert_reqs=self.cert_reqs, \
-                   ca_certs=self.ca_certs)
+            context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
+            context.verify_mode = self.cert_reqs
+            if self.ca_certs:
+                context.load_default_certs(self.ca_certs)
+            if LooseVersion(python_version()) >= LooseVersion('2.7.15'):
+                context.options |= ssl.OP_NO_TLSv1_3
+            return context.wrap_socket(sock)
         return sock
 
     def checkSocket(self):
